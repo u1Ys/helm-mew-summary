@@ -21,8 +21,10 @@
     (candidates . (lambda ()
 		    (append
 		     (mew-local-folder-alist)
-		     (mapcar 'car (mew-imap-folder-alist)))
-		    ))
+		     (mapcar 'car (mew-imap-folder-alist
+				   (if (mew-case-default-p mew-case)
+				       "" mew-case)))
+		     )))
     (action . mew-summary-visit-folder)
     ))
 
