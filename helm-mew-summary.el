@@ -51,7 +51,7 @@
 		    ;; "mew-input-refile-folders" function
 		    (mew-input-refile-folder-check
 		     (mapcar 'mew-chop (mew-split folder ?,))
-		     'imap 'local)
+		     'imap)
 		    ))
 	))
 
