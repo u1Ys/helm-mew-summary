@@ -70,10 +70,9 @@
       ((proto-is-imap (mew-folder-imapp proto))
        ;; add '%' to head when protocol is imap and `folder' is not
        ;; start with '%'
-       (folder
-	(if (and proto-is-imap (not (mew-folder-imapp folder)))
-	    (concat "%" folder)
-       	  folder)))
+       (folder (if (and proto-is-imap (not (mew-folder-imapp folder)))
+		   (concat "%" folder)
+       		 folder)))
     ;; extract from original `mew-input-refile-folders' function
     (mew-input-refile-folder-check
      (mapcar 'mew-chop (mew-split folder ?,))

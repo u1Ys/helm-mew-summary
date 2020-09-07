@@ -12,8 +12,8 @@ Add following to your configure file
 
 ```emacs-lisp
 (require 'helm-mew-summary)
+
 (define-key mew-summary-mode-map (kbd "g")
   'helm-mew-summary-goto-folder)
-
 (use-helm-to-mew-refile)
 ```
