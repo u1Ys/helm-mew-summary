@@ -19,13 +19,13 @@
 	))
 
 (defvar helm-mew-folder-source
-  '((name . "Folder")
-    (candidates . (lambda ()
-		    (append
-		     (mew-local-folder-alist)
-		     (mapcar 'car (helm-mew-imap-current-folder-alist))
-		     )))
-    (action . mew-summary-visit-folder)
+      (helm-build-sync-source
+	  "Folders"
+	:candidates (lambda ()
+		      (append
+		       (mew-local-folder-alist)
+		       (mapcar 'car (helm-mew-imap-current-folder-alist))))
+	:action 'mew-summary-visit-folder
     ))
 
 ;; ------------------------ refile
@@ -47,19 +47,17 @@
      ))
 
 (defvar helm-mew-refile-source
-  '((name . "Refile Folder")
-    (candidates . (lambda ()
-		    (mapcar 'car (helm-mew-imap-current-folder-alist))
-		    ))
-    (action . (lambda (folder)
-		(helm-mew-refile-action folder))
-	    )))
+  (helm-build-sync-source
+      "Refile Folder"
+    :candidates (lambda ()
+		  (mapcar 'car (helm-mew-imap-current-folder-alist)))
+    :action 'helm-mew-refile-action
+    ))
 
 (defvar helm-mew-refile-fallback-source
   (helm-build-dummy-source
       "Create Folder"
     :action 'helm-mew-refile-action
-    :name "fallback"
     )
   "Even if enter an input that is not in candidates, do the same
    action (creates a folder in `mew-refile-folder-check' function
@@ -68,10 +66,10 @@
 
 (defun helm-mew-refile-action (folder)
   (let*
-      ;; FIXME: `proto' is not function-local defined
+      ;; FIXME: `proto' is not function-local variable
       ((proto-is-imap (mew-folder-imapp proto))
-       ;; add '%' to head if protocol is imap and
-       ;; `folder' is not start with '%'
+       ;; add '%' to head when protocol is imap and `folder' is not
+       ;; start with '%'
        (folder
 	(if (and proto-is-imap (not (mew-folder-imapp folder)))
 	    (concat "%" folder)
